@@ -55,4 +55,12 @@ def sign_up_user(request):
 
 
 def login_user(request):
+    if request.method == 'POST':
+        if request.POST.get('username') and request.POST.get('password'):
+            cursor = connection.cursor()
+            query = 'SELECT * FROM user WHERE username="{username}" and password="{password}"'.format(username=request.POST.get('username'), password=request.POST.get('password'))
+            cursor.execute(query)
+            if cursor.fetchall():
+                return render(request, 'index.html')
+
     return render(request, 'login.html')
