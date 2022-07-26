@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<!-- saved from url=(0053)https://getbootstrap.com/docs/4.0/examples/dashboard/ -->
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    {% load static %}
+    <link rel='stylesheet' href="{% static 'bootstrap.min.css' %}">
+    <link rel='stylesheet' href="{% static 'dashboard.css' %}">
+    <link rel='stylesheet' href="{% static 'bootstrap.min.js.download' %}">
+    <link rel='stylesheet' href="{% static 'feather.min.js.download' %}">
+    <link rel='stylesheet' href="{% static 'jquery-3.2.1.slim.min.js.download' %}">
+    <link rel='stylesheet' href="{% static 'popper.min.js.download' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Movie List</title>
+
+<body data-dashlane-rid="aaed742de7bd2e33" data-form-type="">
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="../home">Movie Catalog</a>
+    <input class="form-control form-control-dark w-100" type="text" aria-label="Search"
+           data-dashlane-rid="8a92dab95a000043" data-form-type="">
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" href="../login">Login</a>
+        </li>
+    </ul>
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" href="../register">Register</a>
+        </li>
+    </ul>
+</nav>
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+    <h1 class="h2">Login</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="btn-group mr-2">
+        </div>
+    </div>
+</div>
+
+{% if warning %}
+<div class="alert alert-danger" role="alert">
+    {{ warning }}
+</div>
+{% endif %}
+<form method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="usernameinput">Username</label>
+        <input type="text" class="form-control" name="username" placeholder="Enter Username">
+    </div>
+    <div class="form-group">
+        <label for="passworddinput">Password</label>
+        <input type="password" class="form-control" name="password" placeholder="Enter Password">
+    </div>
+
+    <div></div>
+    <button type="submit" class="btn btn-primary">Register</button>
+</form>
+
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+    <div class="chartjs-size-monitor"
+         style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+        <div class="chartjs-size-monitor-expand"
+             style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+            <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+        </div>
+        <div class="chartjs-size-monitor-shrink"
+             style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+            <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+        </div>
+    </div>
+
+</body>
+</html>

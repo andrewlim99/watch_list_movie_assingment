@@ -17,12 +17,17 @@
 
 <body data-dashlane-rid="aaed742de7bd2e33" data-form-type="">
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Movie Catalog</a>
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="../home">Movie Catalog</a>
     <input class="form-control form-control-dark w-100" type="text" aria-label="Search"
            data-dashlane-rid="8a92dab95a000043" data-form-type="">
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-            <a class="nav-link" href="login">Login</a>
+            <a class="nav-link" href="../login">Login</a>
+        </li>
+    </ul>
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" href="../register">Register</a>
         </li>
     </ul>
 </nav>
@@ -33,7 +38,7 @@
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">
+                        <a class="nav-link active" href="../home">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                  stroke-linejoin="round" class="feather feather-home">
@@ -44,7 +49,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="../movies">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                  stroke-linejoin="round" class="feather feather-film">
@@ -89,24 +94,25 @@
         </div>
 
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-            <h1 class="h2">Movie List</h1>
+            <h1>Welcome to Movie Catalog Website</h1>
             <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group mr-2">
                 </div>
             </div>
         </div>
 
-        <div class="card-columns">
-            {% for i in movie_list %}
-                <div class="card">
-                    <img class="card-img-top" src="{{ i.poster_path }}"
-                         alt={{ i.title }} width="500" height="450">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ i.title }}</h5>
-                        <p class="card-text">{{ i.overview }}</p>
-                    </div>
+        <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="d-block w-100" src="https://image.tmdb.org/t/p/w500//7WsyChQLEftFiDOVTGkv3hFpyyt.jpg" alt="First slide">
                 </div>
-            {% endfor %}
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="https://image.tmdb.org/t/p/w500//qttNmCib9gHhR5q0QoZ3FgmGom9.jpg" alt="Second slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="https://image.tmdb.org/t/p/w500//uxzzxijgPIY7slzFvMotPv8wjKA.jpg" alt="Third slide">
+                </div>
+            </div>
         </div>
 </body>
 </html>
