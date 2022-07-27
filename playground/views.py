@@ -4,6 +4,7 @@ from django.db import connection
 from datetime import date
 from django.shortcuts import redirect
 from playground.api import *
+from django.template import RequestContext
 
 
 # Create your views here.
@@ -102,8 +103,8 @@ def add_to_watch_list(request):
         "movie_id": request.POST.get('movie_id'),
         "user_name": user_name,
         "movie_title": request.POST.get('movie_title'),
-        "movie_url": str(request.POST.get('movie_poster_path')),
-        "date_added": today_date.strftime("%Y-%m-%d")
+        "movie_url": str(request.POST.get('movie_poster_path'))
+
     }
 
     site_url = "http://{0}".format(request.get_host())
@@ -152,3 +153,8 @@ def remove_watch_list(request):
         raise ConnectionError
 
     return redirect('../watch_list/')
+
+
+def update_movie_notes(request):
+    return render(request, 'update_movie_notes.html')
+

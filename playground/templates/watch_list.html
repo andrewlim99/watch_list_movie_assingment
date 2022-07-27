@@ -108,30 +108,29 @@
                 </div>
             </div>
         </div>
-    {% if success_modal %}
-        <div class="alert alert-danger" role="alert">
-    {% endif %}
+        {% if success_modal %}
+            <div class="alert alert-danger" role="alert">
+        {% endif %}
 
         <div class="card-columns">
             {% for i in movie_list %}
                 <div class="card">
                     <img class="card-img-top" src="{{ i.movie_url }}"
                          alt={{ i.title }} width="500" height="450">
-
+                    <button type="submit" class="btn btn-primary" id="title">Update</button>
+                    <form action="{% url 'remove_watch_list' %}" method="POST">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-primary" id="title">Update</button>
-                        <form action="{% url 'remove_watch_list' %}" method="POST">
                         <button type="submit" class="btn btn-danger" id="title">Delete</button>
-                            <input type="hidden" name="movie_title" value="{{i.title}}"/>
-                            <input type="hidden" name="movie_poster_path" value="{{i.poster_path}}"/>
-                            <input type="hidden" name="user_data" value="{{data}}"/>
-                            <input type="hidden" name="movie_id" value="{{i.movie_id}}"/>
-                            <input type="hidden" name="watch_list_id" value="{{i.id}}"/>
+                        <input type="hidden" name="movie_title" value="{{ i.title }}"/>
+                        <input type="hidden" name="movie_poster_path" value="{{ i.poster_path }}"/>
+                        <input type="hidden" name="user_data" value="{{ data }}"/>
+                        <input type="hidden" name="movie_id" value="{{ i.movie_id }}"/>
+                        <input type="hidden" name="watch_list_id" value="{{ i.id }}"/>
 
-                    <div class="card-body">
-                        <h5 class="card-title" >{{ i.movie_title }}</h5>
-                    </div>
-                        </form>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ i.movie_title }}</h5>
+                        </div>
+                    </form>
                 </div>
             {% endfor %}
         </div>

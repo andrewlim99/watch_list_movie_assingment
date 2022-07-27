@@ -7,20 +7,20 @@ class User(models.Model):
 	first_name = models.CharField(max_length=50)
 	last_name = models.CharField(max_length=50)
 	password = models.CharField(max_length=50)
-	date_joined = models.DateTimeField()
+	date_joined = models.DateField()
 
 	class Meta:
 		db_table = "user"
 
 
 class WatchList(models.Model):
-	user_id = models.IntegerField()
-	user_name = models.CharField(max_length=50)
-	movie_id = models.CharField(max_length=50)
-	movie_title = models.CharField(max_length=50)
+	user_id = models.IntegerField(blank=True)
+	user_name = models.CharField(max_length=50, blank=True)
+	movie_id = models.CharField(max_length=50, blank=True)
+	movie_title = models.CharField(max_length=50, blank=True)
 	movie_notes = models.CharField(max_length=500, blank=True)
-	movie_url = models.CharField(max_length=100)
-	date_added = models.DateTimeField(auto_now_add=True)
+	movie_url = models.CharField(max_length=100, blank=True)
+	date_added = models.DateField(auto_now_add=True)
 
 	class Meta:
 		db_table = "watch_list"
@@ -29,7 +29,7 @@ class WatchList(models.Model):
 class UserActivity(models.Model):
 	user_id = models.IntegerField()
 	activity = models.CharField(max_length=50)
-	activity_date = models.DateTimeField()
+	activity_date = models.DateField()
 
 	class Meta:
 		db_table = "user_activity"
