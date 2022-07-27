@@ -93,6 +93,7 @@ def logout_user(request):
 
 
 def add_to_watch_list(request):
+    today_date = date.today()
     user_id = request.POST.get('user_data').split("-")[0]
     user_name = request.POST.get('user_data').split("-")[1]
     headers = {'Content-Type': 'application/json'}
@@ -101,7 +102,8 @@ def add_to_watch_list(request):
         "movie_id": request.POST.get('movie_id'),
         "user_name": user_name,
         "movie_title": request.POST.get('movie_title'),
-        "movie_url": str(request.POST.get('movie_poster_path'))
+        "movie_url": str(request.POST.get('movie_poster_path')),
+        "date_added": today_date.strftime("%Y-%m-%d")
     }
 
     site_url = "http://{0}".format(request.get_host())

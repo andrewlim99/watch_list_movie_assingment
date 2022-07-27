@@ -2,6 +2,17 @@ from django.db import models
 
 
 # Create your models here.
+class User(models.Model):
+	user_name = models.CharField(max_length=50)
+	first_name = models.CharField(max_length=50)
+	last_name = models.CharField(max_length=50)
+	password = models.CharField(max_length=50)
+	date_joined = models.DateTimeField()
+
+	class Meta:
+		db_table = "user"
+
+
 class WatchList(models.Model):
 	user_id = models.IntegerField()
 	user_name = models.CharField(max_length=50)
@@ -9,6 +20,7 @@ class WatchList(models.Model):
 	movie_title = models.CharField(max_length=50)
 	movie_notes = models.CharField(max_length=500, blank=True)
 	movie_url = models.CharField(max_length=100)
+	date_added = models.DateTimeField(auto_now_add=True)
 
 	class Meta:
 		db_table = "watch_list"
@@ -17,7 +29,7 @@ class WatchList(models.Model):
 class UserActivity(models.Model):
 	user_id = models.IntegerField()
 	activity = models.CharField(max_length=50)
-	activity_date = models.DateTimeField(auto_now_add=True)
+	activity_date = models.DateTimeField()
 
 	class Meta:
 		db_table = "user_activity"
