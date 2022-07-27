@@ -105,8 +105,48 @@ def add_to_watch_list(request):
     }
 
     site_url = "http://{0}".format(request.get_host())
-    get_movie_list_response = requests.post('{0}/api/add_watch_list'.format(site_url), headers=headers, json=body)
-    if get_movie_list_response.status_code != 200:
+    add_to_watch_list_response = requests.post('{0}/api/add_watch_list'.format(site_url), headers=headers, json=body)
+    if add_to_watch_list_response.status_code != 200:
         raise ConnectionError
 
     return redirect('../movies/')
+
+
+def watch_list_page(request):
+    user_id = request.session['user']
+    login_user = get_logged_in_user(request)
+    user_id = user_id.split("-")[0]
+    context = {
+        "movie_list": []
+    }
+    headers = {'Content-Type': 'application/json'}
+    body = {
+        "user_id": user_id
+    }
+
+    site_url = "http://{0}".format(request.get_host())
+    get_user_watch_list_response = requests.get('{0}/api/get_user_watch_list'.format(site_url), headers=headers, params=body)
+    if get_user_watch_list_response.status_code == 200:
+        for item in get_user_watch_list_response.json():
+            context['movie_list'].append({
+                "id": item['id'],
+                "user_id": item['user_id'],
+                "user_name": item['user_name'],
+                "movie_id": item['movie_id'],
+                "movie_title": item['movie_title'],
+                "movie_notes": item['movie_notes'],
+                "movie_url": item['movie_url']
+            })
+    context.update(login_user)
+    return render(request, 'watch_list.html', context=context)
+
+
+def remove_watch_list(request):
+    headers = {'Content-Type': 'application/json'}
+    deleted_id = request.POST.get('watch_list_id')
+    site_url = "http://{0}".format(request.get_host())
+    get_user_watch_list_response = requests.delete('{0}/api/delete_watch_list/{1}'.format(site_url, deleted_id), headers=headers)
+    if get_user_watch_list_response.status_code != 200:
+        raise ConnectionError
+
+    return redirect('../watch_list/')

@@ -12,3 +12,12 @@ class WatchList(models.Model):
 
 	class Meta:
 		db_table = "watch_list"
+
+
+class UserActivity(models.Model):
+	user_id = models.IntegerField()
+	activity = models.CharField(max_length=50)
+	activity_date = models.DateTimeField(auto_now_add=True)
+
+	class Meta:
+		db_table = "user_activity"
