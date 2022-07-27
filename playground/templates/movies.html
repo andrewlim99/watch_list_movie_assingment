@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- saved from url=(0053)https://getbootstrap.com/docs/4.0/examples/dashboard/ -->
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -15,28 +14,29 @@
     <meta name="author" content="">
     <title>Movie List</title>
 
+
 <body data-dashlane-rid="aaed742de7bd2e33" data-form-type="">
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
     <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="../home">Movie Catalog</a>
     <input class="form-control form-control-dark w-100" type="text" aria-label="Search"
            data-dashlane-rid="8a92dab95a000043" data-form-type="">
     {% if data %}
-    <ul class="navbar-nav px-3">
-        <li class="nav-item text-nowrap">
-            <a class="nav-link" href="../signout">Signout</a>
-        </li>
-    </ul>
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" href="../signout">Signout</a>
+            </li>
+        </ul>
     {% else %}
-    <ul class="navbar-nav px-3">
-        <li class="nav-item text-nowrap">
-            <a class="nav-link" href="../login">Login</a>
-        </li>
-    </ul>
-    <ul class="navbar-nav px-3">
-        <li class="nav-item text-nowrap">
-            <a class="nav-link" href="../register">Register</a>
-        </li>
-    </ul>
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" href="../login">Login</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" href="../register">Register</a>
+            </li>
+        </ul>
     {% endif %}
 </nav>
 
@@ -108,16 +108,29 @@
                 </div>
             </div>
         </div>
+    {% if success_modal %}
+        <div class="alert alert-danger" role="alert">
+    {% endif %}
 
         <div class="card-columns">
             {% for i in movie_list %}
                 <div class="card">
+                    <form action="{% url 'add_to_watch_list' %}" method="POST">
                     <img class="card-img-top" src="{{ i.poster_path }}"
                          alt={{ i.title }} width="500" height="450">
+
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary" id="title">Add to watch list</button>
+                            <input type="hidden" name="movie_title" value="{{i.title}}"/>
+                            <input type="hidden" name="movie_poster_path" value="{{i.poster_path}}"/>
+                            <input type="hidden" name="user_data" value="{{data}}"/>
+                            <input type="hidden" name="movie_id" value="{{i.movie_id}}"/>
+
                     <div class="card-body">
-                        <h5 class="card-title">{{ i.title }}</h5>
+                        <h5 class="card-title" >{{ i.title }}</h5>
                         <p class="card-text">{{ i.overview }}</p>
                     </div>
+                        </form>
                 </div>
             {% endfor %}
         </div>

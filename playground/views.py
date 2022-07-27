@@ -3,6 +3,7 @@ import requests
 from django.db import connection
 from datetime import date
 from django.shortcuts import redirect
+from playground.api import *
 
 
 # Create your views here.
@@ -26,7 +27,7 @@ def get_movies(request):
 
     api_key = "08a4cc722f0c09e91f63172cac468dc6"
     movie_data_list = []
-    
+
     headers = {'Content-Type': 'application/json'}
     body = {
         "page": 1,
@@ -38,6 +39,7 @@ def get_movies(request):
         for i in get_movie_list_response.json()['results']:
             response_url = 'https://image.tmdb.org/t/p/w500/{poster_url}'.format(poster_url=i['poster_path'])
             movie_data_list.append({
+                'movie_id': i['id'],
                 'poster_path': response_url,
                 'title': i['original_title'],
                 'overview': i['overview']
@@ -51,7 +53,8 @@ def get_movies(request):
 def sign_up_user(request):
     today_date = date.today()
     if request.method == 'POST':
-        if request.POST.get('username') and request.POST.get('first_name') and request.POST.get('last_name') and request.POST.get('password'):
+        if request.POST.get('username') and request.POST.get('first_name') and request.POST.get(
+                'last_name') and request.POST.get('password'):
             cursor = connection.cursor()
             query = 'INSERT INTO user (username, first_name, last_name, password, date_joined) ' \
                     'VALUES ("{username}", "{first_name}", "{last_name}", "{password}", STR_TO_DATE("{today_date}", "%Y-%m-%d"));' \
@@ -71,7 +74,8 @@ def login_user(request):
     if request.method == 'POST':
         if request.POST.get('username') and request.POST.get('password'):
             cursor = connection.cursor()
-            query = 'SELECT * FROM user WHERE username="{username}" and password="{password}"'.format(username=request.POST.get('username'), password=request.POST.get('password'))
+            query = 'SELECT * FROM user WHERE username="{username}" and password="{password}"'.format(
+                username=request.POST.get('username'), password=request.POST.get('password'))
             cursor.execute(query)
             record = cursor.fetchone()
             if record:
@@ -86,3 +90,23 @@ def login_user(request):
 def logout_user(request):
     request.session.flush()
     return redirect('../home/')
+
+
+def add_to_watch_list(request):
+    user_id = request.POST.get('user_data').split("-")[0]
+    user_name = request.POST.get('user_data').split("-")[1]
+    headers = {'Content-Type': 'application/json'}
+    body = {
+        "user_id": user_id,
+        "movie_id": request.POST.get('movie_id'),
+        "user_name": user_name,
+        "movie_title": request.POST.get('movie_title'),
+        "movie_url": str(request.POST.get('movie_poster_path'))
+    }
+
+    site_url = "http://{0}".format(request.get_host())
+    get_movie_list_response = requests.post('{0}/api/add_watch_list'.format(site_url), headers=headers, json=body)
+    if get_movie_list_response.status_code != 200:
+        raise ConnectionError
+
+    return redirect('../movies/')

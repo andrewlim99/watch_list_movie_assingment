@@ -18,5 +18,5 @@ from django.urls import path, include
 # import debug_toolbar
 
 urlpatterns = [
-    path('', include('playground.urls')),
+    path('', include('playground.urls'))
 ]

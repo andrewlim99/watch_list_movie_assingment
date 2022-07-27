@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- saved from url=(0053)https://getbootstrap.com/docs/4.0/examples/dashboard/ -->
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -111,7 +110,6 @@
                 </div>
             </div>
         </div>
-        <h1>Please Login to see full content</h1>
         {% if data %}
         <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
@@ -126,6 +124,8 @@
                 </div>
             </div>
         </div>
+        {% else %}
+        <h1>Please Login to see full content</h1>
         {% endif %}
 </body>
 </html>
