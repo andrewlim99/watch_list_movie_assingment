@@ -117,7 +117,13 @@
                 <div class="card">
                     <img class="card-img-top" src="{{ i.movie_url }}"
                          alt={{ i.title }} width="500" height="450">
-                    <button type="submit" class="btn btn-primary" id="title">Update</button>
+
+                    <form action="{% url 'update_movie_notes' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ i.id }}"/>
+                        <button type="submit" class="btn btn-primary" id="title">Update</button>
+                    </form>
+
                     <form action="{% url 'remove_watch_list' %}" method="POST">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-danger" id="title">Delete</button>
@@ -129,6 +135,7 @@
 
                         <div class="card-body">
                             <h5 class="card-title">{{ i.movie_title }}</h5>
+                            <p class="card-title">{{ i.movie_notes }}</p>
                         </div>
                     </form>
                 </div>

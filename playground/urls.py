@@ -14,5 +14,6 @@ urlpatterns = [
     path('api/get_user_watch_list/', api.get_user_watch_list),
     path('api/delete_watch_list/<int:pk>', api.delete_watch_list),
     path('remove_watch_list/', views.remove_watch_list, name='remove_watch_list'),
+    path('update_movie_notes/', views.update_movie_notes, name='update_movie_notes'),
     path('api/update_movie_notes/<int:pk>', api.update_movie_notes),
 ]

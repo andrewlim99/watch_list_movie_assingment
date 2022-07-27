@@ -94,7 +94,6 @@ def logout_user(request):
 
 
 def add_to_watch_list(request):
-    today_date = date.today()
     user_id = request.POST.get('user_data').split("-")[0]
     user_name = request.POST.get('user_data').split("-")[1]
     headers = {'Content-Type': 'application/json'}
@@ -156,5 +155,16 @@ def remove_watch_list(request):
 
 
 def update_movie_notes(request):
-    return render(request, 'update_movie_notes.html')
+    headers = {'Content-Type': 'application/json'}
+    updated_id = request.POST.get('id')
+    site_url = "http://{0}".format(request.get_host())
+    json = {
+        "movie_notes": request.POST.get('movie_notes')
+    }
+    get_user_watch_list_response = requests.put('{0}/api/update_movie_notes/{1}'.format(site_url, updated_id),
+                                                   headers=headers, json=json)
+    context = {'movie_id': request.POST.get('id')}
+    if get_user_watch_list_response.status_code == 200:
+        context.update({'response': 'Success'})
 
+    return render(request, 'update_movie_notes.html', context=context)
