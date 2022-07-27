@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!-- saved from url=(0053)https://getbootstrap.com/docs/4.0/examples/dashboard/ -->
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    {% load static %}
+    <link rel='stylesheet' href="{% static 'bootstrap.min.css' %}">
+    <link rel='stylesheet' href="{% static 'dashboard.css' %}">
+    <link rel='stylesheet' href="{% static 'bootstrap.min.js.download' %}">
+    <link rel='stylesheet' href="{% static 'feather.min.js.download' %}">
+    <link rel='stylesheet' href="{% static 'jquery-3.2.1.slim.min.js.download' %}">
+    <link rel='stylesheet' href="{% static 'popper.min.js.download' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Movie List</title>
+
+<body data-dashlane-rid="aaed742de7bd2e33" data-form-type="">
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="../home">Movie Catalog</a>
+    <input class="form-control form-control-dark w-100" type="text" aria-label="Search"
+           data-dashlane-rid="8a92dab95a000043" data-form-type="">
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" href="../login">Login</a>
+        </li>
+    </ul>
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" href="../register">Register</a>
+        </li>
+    </ul>
+</nav>
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+    <h1 class="h2">Edit Movie Notes</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="btn-group mr-2">
+        </div>
+    </div>
+</div>
+
+{% if response %}
+<div class="alert alert-primary" role="alert">
+    {{ response }}
+</div>
+{% endif %}
+<form method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="usernameinput">Movie Notes</label>
+        <input type="hidden" name="id" value="{{ movie_id }}"/>
+        <input type="text" class="form-control" name="movie_notes" placeholder="Update Movie Notes">
+    </div>
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>
+
+</body>
+</html>
