@@ -20,6 +20,14 @@
     <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="../home">Movie Catalog</a>
     <input class="form-control form-control-dark w-100" type="text" aria-label="Search"
            data-dashlane-rid="8a92dab95a000043" data-form-type="">
+
+    {% if data %}
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" href="../signout">Signout</a>
+        </li>
+    </ul>
+    {% else %}
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
             <a class="nav-link" href="../login">Login</a>
@@ -30,6 +38,7 @@
             <a class="nav-link" href="../register">Register</a>
         </li>
     </ul>
+    {% endif %}
 </nav>
 
 <div class="container-fluid">
@@ -48,6 +57,7 @@
                             Home <span class="sr-only">(current)</span>
                         </a>
                     </li>
+                    {% if data %}
                     <li class="nav-item">
                         <a class="nav-link" href="../movies">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -76,6 +86,7 @@
                             Watch List
                         </a>
                 </ul>
+                {% endif %}
             </div>
         </nav>
     </div>
@@ -100,7 +111,8 @@
                 </div>
             </div>
         </div>
-
+        <h1>Please Login to see full content</h1>
+        {% if data %}
         <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
@@ -114,5 +126,6 @@
                 </div>
             </div>
         </div>
+        {% endif %}
 </body>
 </html>

@@ -1,16 +1,29 @@
 from django.shortcuts import render
 import requests
 from django.db import connection
-from playground.models import RegisterUser
 from datetime import date
+from django.shortcuts import redirect
 
 
 # Create your views here.
+def get_logged_in_user(request):
+    context = {"data": ""}
+    if request.session.has_key("user"):
+        context["data"] = request.session['user']
+
+    return context
+
+
 def home_page(request):
-    return render(request, 'index.html')
+    context = get_logged_in_user(request)
+    return render(request, 'index.html', context=context)
 
 
 def get_movies(request):
+    context = get_logged_in_user(request)
+    if not context["data"]:
+        return render(request, 'index.html', context=context)
+
     api_key = "08a4cc722f0c09e91f63172cac468dc6"
     movie_data_list = []
     
@@ -31,8 +44,8 @@ def get_movies(request):
             })
     else:
         raise ConnectionError
-
-    return render(request, 'movies.html', {"movie_list": movie_data_list})
+    context.update({"movie_list": movie_data_list})
+    return render(request, 'movies.html', context=context)
 
 
 def sign_up_user(request):
@@ -49,7 +62,7 @@ def sign_up_user(request):
         else:
             return render(request, 'register.html', context={"warning": "Please fill the empty fields"})
 
-        return render(request, 'index.html')
+        return redirect('../login/')
     else:
         return render(request, 'register.html')
 
@@ -60,7 +73,16 @@ def login_user(request):
             cursor = connection.cursor()
             query = 'SELECT * FROM user WHERE username="{username}" and password="{password}"'.format(username=request.POST.get('username'), password=request.POST.get('password'))
             cursor.execute(query)
-            if cursor.fetchall():
-                return render(request, 'index.html')
+            record = cursor.fetchone()
+            if record:
+                request.session["user"] = "{0}-{1}".format(record[0], record[1])
+                return redirect('../home/')
+            else:
+                return render(request, 'login.html')
 
     return render(request, 'login.html')
+
+
+def logout_user(request):
+    request.session.flush()
+    return redirect('../home/')
